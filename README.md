@@ -2,6 +2,8 @@
 
 React Native implementation of Yandex Mapkit
 
+Not for production use. Active work in progress 🏗🏗🏗
+
 ## Installation
 
 ```sh
