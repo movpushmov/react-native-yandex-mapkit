@@ -8,16 +8,6 @@ React Native implementation of Yandex Mapkit
 npm install react-native-yandex-mapkit
 ```
 
-## Usage
-
-```js
-import { YandexMapkitView } from "react-native-yandex-mapkit";
-
-// ...
-
-<YandexMapkitView color="tomato" />
-```
-
 ## Contributing
 
 See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
