@@ -16,6 +16,8 @@ class MapMarkerView: UIView {
   var _marker: YMKPlacemarkMapObject?
   var _reactSubviews: [UIView] = []
   var _childView: UIView?
+    
+  var _mapView: MapView?
   
   @objc var point: NSDictionary?;
   
@@ -53,30 +55,36 @@ class MapMarkerView: UIView {
   
   @objc override func didUpdateReactSubviews() {
     DispatchQueue.main.async {
-      self.setChildView()
+        self.setChildView()
     }
   }
-  
-  @objc func drawMarker(_ manager: MapView) {
-      guard let rawPoint = point else {
-          return
-      }
-      
-      guard let json = try? JSONSerialization.data(withJSONObject: rawPoint, options: []) else {
-          return
-      }
-      
-      guard let markerPoint = try? JSONDecoder().decode(Point.self, from: json) else {
-          return
-      }
-      
-      let geometry = YMKPoint(latitude: markerPoint.lat, longitude: markerPoint.lon)
-      let placemarkView = YRTViewProvider(uiView: UIView(frame: CGRect(x: 0, y: 0, width: 1, height: 1)))
-          
-      let objects = manager.ymkMapView.mapWindow.map.mapObjects
-      _marker = objects.addPlacemark(with: geometry, view: placemarkView!)
-          
+    
+  @objc func updateMarker() {
+    if _mapView != nil && _marker != nil {
       setChildView()
+    }
+  }
+    
+  @objc func initialize(_ manager: MapView) {
+    self._mapView = manager
+      
+    guard let rawPoint = point else {
+      return
+    }
+
+    guard let json = try? JSONSerialization.data(withJSONObject: rawPoint, options: []) else {
+      return
+    }
+
+    guard let markerPoint = try? JSONDecoder().decode(Point.self, from: json) else {
+      return
+    }
+
+    let geometry = YMKPoint(latitude: markerPoint.lat, longitude: markerPoint.lon)
+    let placemarkView = YRTViewProvider(uiView: UIView(frame: CGRect(x: 0, y: 0, width: 1, height: 1)))
+
+    let objects = manager.ymkMapView.mapWindow.map.mapObjects
+    _marker = objects.addPlacemark(with: geometry, view: placemarkView!)
   }
   
   override init(frame: CGRect) {

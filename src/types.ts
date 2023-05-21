@@ -56,7 +56,7 @@ export type ViewCommands<T extends string, U extends string = ''> = {
 };
 
 export type ViewNameToCommands = ViewCommands<'MapView'> &
-  ViewCommands<'MapMarker', 'drawMarker' | 'destroyMarker'>;
+  ViewCommands<'MapMarker', 'initialize' | 'updateMarker' | 'destroyMarker'>;
 
 export type Views = keyof ViewNameToCommands;
 

@@ -8,7 +8,7 @@
 
 RCT_EXPORT_VIEW_PROPERTY(point, NSDictionary)
 
-RCT_EXPORT_METHOD(drawMarker:(nonnull NSNumber*) reactMapMarkerTag : (nonnull NSNumber*)reactMapViewTag) {
+RCT_EXPORT_METHOD(initialize:(nonnull NSNumber*) reactMapMarkerTag : (nonnull NSNumber*)reactMapViewTag) {
     [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *,UIView *> *viewRegistry) {
         MapView *mapView = viewRegistry[reactMapViewTag];
         YandexMapMarkerManager *mapMarker = viewRegistry[reactMapMarkerTag];
@@ -23,11 +23,25 @@ RCT_EXPORT_METHOD(drawMarker:(nonnull NSNumber*) reactMapMarkerTag : (nonnull NS
             return;
         }
       
-        [mapMarker drawMarker:mapView];
+        [mapMarker initialize:mapView];
+    }];
+}
+
+RCT_EXPORT_METHOD(updateMarker:(nonnull NSNumber*) reactMapMarkerTag) {
+    [self.bridge.uiManager addUIBlock:^(RCTUIManager *uiManager, NSDictionary<NSNumber *,UIView *> *viewRegistry) {
+        YandexMapMarkerManager *mapMarker = viewRegistry[reactMapMarkerTag];
+        
+        if (!mapMarker) {
+            RCTLogError(@"Cannot find NativeView with tag #%@", reactMapMarkerTag);
+            return;
+        }
+      
+        [mapMarker updateMarker];
     }];
 }
 
 // type declarations for functions from Swift
-- (void)drawMarker:(MapView*)manager {}
+- (void)initialize:(MapView*)manager {}
+- (void)updateMarker {}
 
 @end
