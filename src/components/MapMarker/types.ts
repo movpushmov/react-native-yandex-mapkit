@@ -1,5 +1,6 @@
-import type { Point } from '../../types';
-import type { ReactNode, RefObject } from 'react';
+import type { Point, ViewNameToCommands } from '../../types';
+import type { ReactNode } from 'react';
+import type { ViewStyle } from 'react-native';
 
 export interface NativeMapMarkerProps {
   point: Point;
@@ -11,10 +12,12 @@ export interface NativeMapMarkerProps {
 
   onPress?: () => void;
   children?: ReactNode;
+
+  style?: ViewStyle;
 }
 
-export interface MapMarkerProps extends NativeMapMarkerProps {
-  ref?: RefObject<NativeMapMarkerRef>;
-}
+export interface MapMarkerProps extends NativeMapMarkerProps {}
 
-export interface NativeMapMarkerRef {}
+export interface MapMarkerRef {}
+
+export type MarkerCommands = keyof ViewNameToCommands['MapMarker']['Commands'];

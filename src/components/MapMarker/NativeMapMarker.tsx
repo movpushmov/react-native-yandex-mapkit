@@ -2,7 +2,7 @@ import { HostComponent, requireNativeComponent, UIManager } from 'react-native';
 import type { NativeMapMarkerProps } from './types';
 import { LINKING_ERROR } from '../../const';
 
-const ComponentName = 'YandexMapMarkerView';
+const ComponentName = 'YandexMapMarker';
 
 export const NativeYandexMapMarker = (
   UIManager.getViewManagerConfig(ComponentName) != null

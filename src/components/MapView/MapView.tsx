@@ -1,18 +1,19 @@
 import React, { useEffect, useRef } from 'react';
-import type { MapViewProps, NativeMapViewRef } from './types';
+import type { MapViewProps, MapViewRef, NativeMapViewProps } from './types';
 import { NativeYandexMapView } from './NativeMapView';
 import type {
   AnimationProps,
   CameraPoint,
   MapCameraPoint,
+  NativeRef,
   Point,
   Region,
 } from '../../types';
 import { MapContext } from '../utils/mapContext';
 
-export const YandexMapView = React.forwardRef<{}, MapViewProps>(
+export const YandexMapView = React.forwardRef<MapViewRef, MapViewProps>(
   ({ mapStyle, children, ...otherProps }, ref) => {
-    const mapRef = useRef<typeof NativeYandexMapView>(null);
+    const mapRef = useRef<NativeRef<NativeMapViewProps>>(null);
 
     /*
       События, которые предстоит реализовать (из геокодера)
@@ -50,6 +51,7 @@ export const YandexMapView = React.forwardRef<{}, MapViewProps>(
      * @param points {Point[]} Позиции маркеров на карте
      */
     async function fitMarkers(points: Point[]) {
+      console.log(points);
       throw new Error("Don't implemented");
     }
 
@@ -66,6 +68,7 @@ export const YandexMapView = React.forwardRef<{}, MapViewProps>(
      * @param animation {AnimationProps} - анимация
      */
     async function moveCamera(point: CameraPoint, animation: AnimationProps) {
+      console.log(point, animation);
       throw new Error("Don't implemented");
     }
 
@@ -75,12 +78,13 @@ export const YandexMapView = React.forwardRef<{}, MapViewProps>(
      * @param animation {AnimationProps} - анимация
      */
     async function changeZoom(zoom: number, animation: AnimationProps) {
+      console.log(zoom, animation);
       throw new Error("Don't implemented");
     }
 
     useEffect(() => {
       if (ref) {
-        (ref as React.MutableRefObject<NativeMapViewRef>).current = {
+        (ref as React.MutableRefObject<MapViewRef>).current = {
           getCameraPosition: getCameraPosition.bind(this),
           getVisibleRegion: getVisibleRegion.bind(this),
           fitMarkers: fitMarkers.bind(this),

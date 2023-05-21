@@ -4,7 +4,6 @@ import type { MapStyle } from './mapStyle.types';
 import type { ReactElement, RefObject } from 'react';
 import type { MapMarkerProps } from '../MapMarker/types';
 import type { AnimationProps, MapCameraPoint, Region } from '../../types';
-import type { NativeYandexMapView } from './NativeMapView';
 
 export interface NativeMapViewProps {
   initialCoords?: Point & {
@@ -32,8 +31,6 @@ export interface NativeMapViewProps {
 
   mapStyle?: string;
   style?: ViewStyle;
-
-  ref?: RefObject<typeof NativeYandexMapView>;
 }
 
 export interface MapViewProps {
@@ -60,6 +57,7 @@ export interface MapViewProps {
   style?: ViewStyle;
 
   children?: ReactElement<MapMarkerProps> | ReactElement<MapMarkerProps>[];
+  ref?: RefObject<MapViewRef>;
 }
 
 export interface MapViewRef {

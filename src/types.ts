@@ -1,3 +1,6 @@
+import type { Component } from 'react';
+import type { NativeMethods } from 'react-native';
+
 export interface Point {
   lat: number;
   lon: number;
@@ -42,3 +45,24 @@ export enum Animation {
   Smooth,
   Linear,
 }
+
+// Тайпинги для React Native
+export type ViewCommands<T extends string, U extends string = ''> = {
+  [p in T]: {
+    Commands: {
+      [P in U]: number;
+    };
+  };
+};
+
+export type ViewNameToCommands = ViewCommands<'MapView'> &
+  ViewCommands<'MapMarker', 'drawMarker' | 'destroyMarker'>;
+
+export type Views = keyof ViewNameToCommands;
+
+export type ViewConfig<T extends Views> = ViewNameToCommands[T] extends object
+  ? ViewNameToCommands[T]
+  : { Commands: { [p: string]: number } };
+
+export type NativeRef<T extends object> = Component<T, {}, any> &
+  Readonly<NativeMethods>;
